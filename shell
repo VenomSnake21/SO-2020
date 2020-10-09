@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+char entrada[100];
+
+void separar(char[]);
+
+int main(int argc, char *argv[]) {
+	int i = 0, j = 0, cont = 0;
+	char comando[25][50];
+	
+	
+	//printf("%s", entrada);
+	
+	printf("Deme un comando: ");
+	scanf("%[^\n]", &entrada);
+	
+	separar(entrada);
+	
+	//do{
+		
+		
+		
+		
+		
+/*		char *comando = strtok(entrada, delimiters);*/
+
+		
+		
+	//} while(1 == 1);
+	
+/*	if (strcmp(comando,"clear") == 0){*/
+/*		system("cls");*/
+/*	}else if (strcmp(comando,"mkdir") == 0){*/
+		//pendiente
+/*	}*/
+	
+	return 0;
+}
+void separa(char *cad){
+	char *comando=strtok(cad," ");
+	int i=0;
+	while(comando){
+		strcpy(entrada[i],comando);
+		comando=strtok(NULL," ");
+		i++;
+	}
+}
+
+/*void cd(char *args){*/
+/*	if(chdir("..") != -1){*/
+/*		getcwd(valores_vars_ambiente[PWD],sizeof(valores_vars_ambiente[PWD]));*/
+/*	} else*/
+/*	   printf("No se pudo cambiar de directorio,flag:%d\n",chdir(".."));*/
+/*}*/
