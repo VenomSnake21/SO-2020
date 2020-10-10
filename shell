@@ -1,56 +1,81 @@
 #include <stdio.h>
-#include <string.h>
+#include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
+#include <dirent.h>
+#include <sys/types.h>
 
-char entrada[100];
+
+// Hecho por César Luna
+
+
+#define NUVARAM 4
+
+// arreglo que les da el tamaño a las variables de entorno, así de grande ... pos por si se ocupa un comando de 500 caracteres,
+
+char vars_ambi[NUVARAM][500];
+
+//enum creado con los nombre de las variables de ambiente, escritas en mayuscula para denotar su importancia
+
+enum vars_ambi {
+	SHELL,
+	PATH,
+	HOME,
+	PWD
+};
+
+
+
+// arreglo que divide palabra por palabra los comandos ... de allí su nombre
+char comando[25][100];
 
 void separar(char[]);
 
 int main(int argc, char *argv[]) {
+	//cadena de caracteres entrando al sistema (es decir aun sin separar)
+	char entrada[100];
 	int i = 0, j = 0, cont = 0;
-	char comando[25][50];
 	
+	do{
+		printf("%s> ",vars_ambi[PWD]);
+		fgets(entrada,sizeof(entrada),stdin);
+	} while(1 == 1);
 	
-	//printf("%s", entrada);
-	
-	printf("Deme un comando: ");
-	scanf("%[^\n]", &entrada);
-	
-	separar(entrada);
-	
-	//do{
-		
-		
-		
-		
-		
-/*		char *comando = strtok(entrada, delimiters);*/
-
-		
-		
-	//} while(1 == 1);
-	
-/*	if (strcmp(comando,"clear") == 0){*/
-/*		system("cls");*/
-/*	}else if (strcmp(comando,"mkdir") == 0){*/
+	if (strcmp(comando,"clear") == 0){
+		system("cls");
+	}else if (strcmp(comando,"mkdir") == 0){
 		//pendiente
-/*	}*/
+	}
 	
 	return 0;
 }
+
+//funcion que inicializa las variables de ambiente ... Omonimo a su funcion
+
+void inicializar(char *nombreprograma){
+	strcpy( vars_ambi[SHELL],getenv("SHELL") );
+	strcpy( vars_ambi[PATH],getenv("PATH") );
+	strcpy( vars_ambi[HOME],getenv("HOME") );
+	strcpy( vars_ambi[PWD],getenv("PWD") );
+}
+
 void separa(char *cad){
 	char *comando=strtok(cad," ");
 	int i=0;
 	while(comando){
-		strcpy(entrada[i],comando);
+		strcpy(comando[i],comando);
 		comando=strtok(NULL," ");
 		i++;
 	}
 }
 
-/*void cd(char *args){*/
-/*	if(chdir("..") != -1){*/
-/*		getcwd(valores_vars_ambiente[PWD],sizeof(valores_vars_ambiente[PWD]));*/
-/*	} else*/
-/*	   printf("No se pudo cambiar de directorio,flag:%d\n",chdir(".."));*/
-/*}*/
+void cd(char *args){
+	if(chdir("..") != -1){
+		getcwd(vars_ambi[PWD],sizeof(vars_ambi[PWD]));
+	} else
+	   printf("No se pudo cambiar de directorio,flag:%d\n",chdir(".."));
+}
+
+void pwd(void){
+	printf("pwd:%s\n",vars_ambi[PWD]);
+}
